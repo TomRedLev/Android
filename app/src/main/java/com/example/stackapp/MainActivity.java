@@ -2,7 +2,9 @@ package com.example.stackapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,5 +12,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button draw = findViewById(R.id.drawButton);
+        draw.setOnClickListener( (v) -> {
+            startActivity(new Intent(this, DrawActivity.class));
+        });
+
+        Button write = findViewById(R.id.writeButton);
+        write.setOnClickListener( (v) -> {
+            startActivity(new Intent(this, WriteActivity.class));
+        });
+
+        Button hs = findViewById(R.id.hyperstackButton);
+        hs.setOnClickListener( (v) -> {
+            startActivity(new Intent(this, HyperstackActivity.class));
+        });
     }
 }
