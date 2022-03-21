@@ -3,4 +3,6 @@
     <string name="draw">draw</string>
     <string name="hyperstack">hyperstack</string>
     <string name="write">write</string>
+    <string name="enter_some_text_here">Enter some text here</string>
+    <string name="enter">Enter</string>
 </resources>
