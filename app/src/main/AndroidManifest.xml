@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.stackapp">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,6 +31,10 @@
 
         <activity
             android:name=".HyperstackActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ImageActivity"
             android:exported="true" />
     </application>
 

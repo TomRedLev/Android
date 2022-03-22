@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
         Button hs = findViewById(R.id.hyperstackButton);
         hs.setOnClickListener( (v) -> {
             startActivity(new Intent(this, HyperstackActivity.class));
+        });
+
+        Button im = findViewById(R.id.imageButton);
+        im.setOnClickListener( (v) -> {
+            startActivity(new Intent(this, ImageActivity.class));
         });
     }
 }

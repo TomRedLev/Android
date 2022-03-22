@@ -5,4 +5,7 @@
     <string name="write">write</string>
     <string name="enter_some_text_here">Enter some text here</string>
     <string name="enter">Enter</string>
+    <string name="image">Image</string>
+    <string name="choose">Choose</string>
+    <string name="will_contains_a_choosen_image">Will contains a choosen image</string>
 </resources>
