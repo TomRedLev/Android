@@ -36,11 +36,11 @@ public class AudioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_audio);
 
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
 
             } else {
                 String[] perm = {Manifest.permission.RECORD_AUDIO};
-                requestPermissions(perm, 200);
+                ActivityCompat.requestPermissions(this, perm, 200);
             }
         } else {
             Toast.makeText(this, "No microphone", Toast.LENGTH_LONG);
@@ -49,26 +49,28 @@ public class AudioActivity extends AppCompatActivity {
 
         Button record = findViewById(R.id.recordButton);
         record.setOnClickListener( (v) -> {
+            Toast.makeText(this, "Start recording", Toast.LENGTH_LONG);
             mr = new MediaRecorder();
             mr.setAudioSource(MediaRecorder.AudioSource.MIC);
             mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mr.setOutputFile(getFilePath());
             mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             try {
+                Log.v("Record", "Here");
                 mr.prepare();
-                Toast.makeText(this, "Start recording", Toast.LENGTH_LONG);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             mr.start();
         });
 
-        Button stop = findViewById(R.id.playButton);
+        Button stop = findViewById(R.id.stopButton);
         stop.setOnClickListener( (v) -> {
+            Log.v("Stop", "Here");
+            Toast.makeText(this, "Stop recording", Toast.LENGTH_LONG);
             mr.stop();
             mr.release();
             mr = null;
-            Toast.makeText(this, "Stop recording", Toast.LENGTH_LONG);
         });
 
         Button play = findViewById(R.id.playButton);
