@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StackApp">
+        android:theme="@style/Theme.StackApp"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -35,6 +36,10 @@
 
         <activity
             android:name=".ImageActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".AudioActivity"
             android:exported="true" />
     </application>
 

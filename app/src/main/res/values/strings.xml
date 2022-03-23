@@ -8,4 +8,8 @@
     <string name="image">Image</string>
     <string name="choose">Choose</string>
     <string name="will_contains_a_choosen_image">Will contains a choosen image</string>
+    <string name="record">Record</string>
+    <string name="play">play</string>
+    <string name="stop">Stop</string>
+    <string name="audio">Audio</string>
 </resources>

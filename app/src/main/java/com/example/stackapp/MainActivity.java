@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,12 +13,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button draw = findViewById(R.id.drawButton);
+        Button draw = findViewById(R.id.stopButton);
         draw.setOnClickListener( (v) -> {
             startActivity(new Intent(this, DrawActivity.class));
         });
 
-        Button write = findViewById(R.id.writeButton);
+        Button write = findViewById(R.id.playButton);
         write.setOnClickListener( (v) -> {
             startActivity(new Intent(this, WriteActivity.class));
         });
@@ -29,9 +28,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, HyperstackActivity.class));
         });
 
-        Button im = findViewById(R.id.imageButton);
+        Button im = findViewById(R.id.recordButton);
         im.setOnClickListener( (v) -> {
             startActivity(new Intent(this, ImageActivity.class));
+        });
+
+        Button audio = findViewById(R.id.audioButton);
+        audio.setOnClickListener( (v) -> {
+            startActivity(new Intent(this, AudioActivity.class));
         });
     }
 }

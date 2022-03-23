@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ImageActivity extends AppCompatActivity {
 
-    ImageView iv;
-    Button button;
+    private ImageView iv;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
