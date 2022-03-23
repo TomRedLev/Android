@@ -12,4 +12,6 @@
     <string name="play">play</string>
     <string name="stop">Stop</string>
     <string name="audio">Audio</string>
+    <string name="geoloc_position">geoloc position</string>
+    <string name="geoloc">Geoloc</string>
 </resources>

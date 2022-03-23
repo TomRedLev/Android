@@ -15,9 +15,9 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-        Button but = (Button) findViewById(R.id.button);
+        Button but = (Button) findViewById(R.id.writeButton);
         EditText edit = (EditText) findViewById(R.id.textInputEditText2);
-        TextView text = (TextView) findViewById(R.id.textView2);
+        TextView text = (TextView) findViewById(R.id.TextView2);
 
         but.setOnClickListener(new View.OnClickListener() {
             @Override

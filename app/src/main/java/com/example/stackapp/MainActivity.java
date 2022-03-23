@@ -13,12 +13,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button draw = findViewById(R.id.stopButton);
+        Button draw = findViewById(R.id.drawButton);
         draw.setOnClickListener( (v) -> {
             startActivity(new Intent(this, DrawActivity.class));
         });
 
-        Button write = findViewById(R.id.playButton);
+        Button write = findViewById(R.id.writeButton);
         write.setOnClickListener( (v) -> {
             startActivity(new Intent(this, WriteActivity.class));
         });
@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         Button audio = findViewById(R.id.audioButton);
         audio.setOnClickListener( (v) -> {
             startActivity(new Intent(this, AudioActivity.class));
+        });
+
+        Button geo = findViewById(R.id.geoButton);
+        geo.setOnClickListener( (v) -> {
+            startActivity(new Intent(this, GeolocActivity.class));
         });
     }
 }
