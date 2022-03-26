@@ -31,55 +31,8 @@ public class Note extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
         editText = findViewById(R.id.editText);
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
     }
-
-    /*
-        Button draw = findViewById(R.id.drawButton);
-        draw.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, DrawActivity.class));
-        });
-
-        Button write = findViewById(R.id.writeButton);
-        write.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, WriteActivity.class));
-        });
-
-        Button hs = findViewById(R.id.hyperstackButton);
-        hs.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, HyperstackActivity.class));
-        });
-
-        Button im = findViewById(R.id.recordButton);
-        im.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, ImageActivity.class));
-        });
-
-        Button audio = findViewById(R.id.audioButton);
-        audio.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, AudioActivity.class));
-        });
-
-        Button geo = findViewById(R.id.geoButton);
-        geo.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, GeolocActivity.class));
-        });
-        */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,21 +45,26 @@ public class Note extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.addImage) {
-            int resource = getResources().getIdentifier("@drawable/omg", null, getPackageName());
-            Drawable d = getDrawable(resource);
-            d.setBounds(0, 0, 500, 500); // TODO Add size in relation to screen size
-            int selectionCursor = editText.getSelectionStart();
-            editText.getText().insert(selectionCursor, ".");
-            selectionCursor = editText.getSelectionStart();
-
-            SpannableStringBuilder builder = new SpannableStringBuilder(editText.getText());
-            builder.setSpan(new ImageSpan(d), selectionCursor - ".".length(), selectionCursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            editText.setText(builder);
-            editText.setSelection(selectionCursor);
+            addImage();
         } else if (id == R.id.addDrawing) {
             startActivity(new Intent(this, DrawActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addImage() {
+        // retrieve image
+        int resource = getResources().getIdentifier("@drawable/omg", null, getPackageName());
+
+        Drawable d = getDrawable(resource);
+        d.setBounds(0, 0, 500, 500); // TODO Add size in relation to screen size
+        int cursor = editText.getSelectionStart();
+        editText.getText().insert(cursor, ".");
+        cursor = editText.getSelectionStart();
+        SpannableStringBuilder builder = new SpannableStringBuilder(editText.getText());
+        builder.setSpan(new ImageSpan(d), cursor - ".".length(), cursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editText.setText(builder);
+        editText.setSelection(cursor);
     }
 }
