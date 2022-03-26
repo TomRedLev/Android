@@ -91,14 +91,27 @@ public class Note extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.addImage) {
-            SpannableStringBuilder ssb = new SpannableStringBuilder(" ");
+            //SpannableStringBuilder ssb = new SpannableStringBuilder(" ");
+
             int resource = getResources().getIdentifier("@drawable/omg", null, getPackageName());
             Drawable d = getDrawable(resource);
             d.setBounds(0, 0, 500, 500); // TODO Add size in relation to screen size
             ImageSpan img = new ImageSpan(d);
-            ssb.setSpan(img, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            editText.setText(ssb, TextView.BufferType.SPANNABLE);
-            //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, mDrawable);
+            Spannable s = (Spannable) editText.getText();
+            //ssb.append(editText.getText().toString());
+            int index = editText.getSelectionStart() >= 0 ? editText.getSelectionStart() : 0;
+            s.setSpan(img, 0, s.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            //editText.invalidate();
+            /*
+            String oriContent = editText.getText().toString();
+            int index = editText.getSelectionStart() >= 0 ? editText.getSelectionStart() : 0;
+            SpannableStringBuilder sBuilder = new SpannableStringBuilder(oriContent);
+            sBuilder.insert(index, ssb);
+            editText.setText(sBuilder.toString());
+            //editText.setSelection(index + insertStr.length());
+            */
+
+            editText.setText(s, TextView.BufferType.EDITABLE);
         } else if (id == R.id.addDrawing) {
             startActivity(new Intent(this, DrawActivity.class));
         }
