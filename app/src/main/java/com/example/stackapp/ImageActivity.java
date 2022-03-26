@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ImageActivity extends AppCompatActivity {
 
-    private ImageView iv;
     private Button button;
 
     @Override
@@ -24,7 +23,6 @@ public class ImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
 
-        iv = findViewById(R.id.imageView);
         button = findViewById(R.id.imgButton);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +50,10 @@ public class ImageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 2000) {
-            iv.setImageURI(data.getData());
+            Intent intent = new Intent();
+            intent.putExtra("imageUri", data.getData().toString());
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 }
