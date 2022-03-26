@@ -4,13 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class Note extends AppCompatActivity {
 
@@ -82,6 +91,13 @@ public class Note extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.addImage) {
+            SpannableStringBuilder ssb = new SpannableStringBuilder(" ");
+            int resource = getResources().getIdentifier("@drawable/omg", null, getPackageName());
+            Drawable d = getDrawable(resource);
+            d.setBounds(0, 0, 500, 500); // TODO Add size in relation to screen size
+            ImageSpan img = new ImageSpan(d);
+            ssb.setSpan(img, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            editText.setText(ssb, TextView.BufferType.SPANNABLE);
             //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, mDrawable);
         } else if (id == R.id.addDrawing) {
             startActivity(new Intent(this, DrawActivity.class));
