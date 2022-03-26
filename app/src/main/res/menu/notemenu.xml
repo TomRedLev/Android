@@ -11,8 +11,8 @@
         app:showAsAction="ifRoom"
         />
     <item
-        android:id="@+id/addSong"
-        android:title="@string/song"
+        android:id="@+id/addAudio"
+        android:title="@string/audio"
         app:showAsAction="ifRoom"
         />
     <item

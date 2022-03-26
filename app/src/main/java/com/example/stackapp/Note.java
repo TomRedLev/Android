@@ -22,6 +22,7 @@ import java.io.InputStream;
 public class Note extends AppCompatActivity {
 
     // TODO Add UTF-8 compatibility
+    // TODO Add possibility to take photo even if library is full of photos
     private EditText editText;
     ActivityResultLauncher<Intent> NoteResultLauncher;
 
@@ -56,6 +57,8 @@ public class Note extends AppCompatActivity {
             NoteResultLauncher.launch(imageIntent);
         } else if (id == R.id.addDrawing) {
             startActivity(new Intent(this, DrawActivity.class));
+        } else if (id == R.id.addAudio) {
+            startActivity(new Intent(this, AudioActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
