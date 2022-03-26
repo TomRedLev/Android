@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -91,31 +92,20 @@ public class Note extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.addImage) {
-            //SpannableStringBuilder ssb = new SpannableStringBuilder(" ");
-
             int resource = getResources().getIdentifier("@drawable/omg", null, getPackageName());
             Drawable d = getDrawable(resource);
             d.setBounds(0, 0, 500, 500); // TODO Add size in relation to screen size
-            ImageSpan img = new ImageSpan(d);
-            Spannable s = (Spannable) editText.getText();
-            //ssb.append(editText.getText().toString());
-            int index = editText.getSelectionStart() >= 0 ? editText.getSelectionStart() : 0;
-            s.setSpan(img, 0, s.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-            //editText.invalidate();
-            /*
-            String oriContent = editText.getText().toString();
-            int index = editText.getSelectionStart() >= 0 ? editText.getSelectionStart() : 0;
-            SpannableStringBuilder sBuilder = new SpannableStringBuilder(oriContent);
-            sBuilder.insert(index, ssb);
-            editText.setText(sBuilder.toString());
-            //editText.setSelection(index + insertStr.length());
-            */
+            int selectionCursor = editText.getSelectionStart();
+            editText.getText().insert(selectionCursor, ".");
+            selectionCursor = editText.getSelectionStart();
 
-            editText.setText(s, TextView.BufferType.EDITABLE);
+            SpannableStringBuilder builder = new SpannableStringBuilder(editText.getText());
+            builder.setSpan(new ImageSpan(d), selectionCursor - ".".length(), selectionCursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            editText.setText(builder);
+            editText.setSelection(selectionCursor);
         } else if (id == R.id.addDrawing) {
             startActivity(new Intent(this, DrawActivity.class));
         }
-        //case R.id.addText: setContentView(new Intent(this, WriteActivity.class)); break;
 
         return super.onOptionsItemSelected(item);
     }
