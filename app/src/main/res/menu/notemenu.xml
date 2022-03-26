@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/addDrawing"
+        android:title="@string/addDrawing"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/addImage"
+        android:title="@string/images"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/addSong"
+        android:title="@string/song"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/addGPS"
+        android:title="@string/gps"
+        app:showAsAction="ifRoom"
+        />
+</menu>

@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StackApp">
         <activity
+            android:name=".Note"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -23,30 +26,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".DrawActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".WriteActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".HyperstackActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".ImageActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".AudioActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".GeolocActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
     </application>
 
 </manifest>
