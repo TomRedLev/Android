@@ -73,8 +73,8 @@ public class ImageActivity extends AppCompatActivity {
                 intent.putExtra("imageUri", path.toString());
             }
             setResult(10000, intent);
-            finish();
         }
+        finish();
     }
 
     public String saveImage(Bitmap myBitmap) {

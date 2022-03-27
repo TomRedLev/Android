@@ -2,13 +2,10 @@ package com.example.stackapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,8 +31,8 @@ public class Note extends AppCompatActivity {
     private String noteName;
 
     @Override
-    public void finish() {
-        super.finish();
+    protected void onStop() {
+        super.onStop();
         SharedPreferences prefs = getSharedPreferences(noteName, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("note", editText.getText().toString());
@@ -68,9 +65,9 @@ public class Note extends AppCompatActivity {
         retrieveEditText();
 
         editText.setLinksClickable(true);
-        editText.setAutoLinkMask(Linkify.WEB_URLS);
+        editText.setAutoLinkMask(Linkify.ALL);
         editText.setMovementMethod(LinkMovementMethod.getInstance());
-        Linkify.addLinks(editText, Linkify.WEB_URLS);
+        Linkify.addLinks(editText, Linkify.ALL);
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,7 +80,7 @@ public class Note extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Linkify.addLinks(s, Linkify.WEB_URLS);
+                Linkify.addLinks(s, Linkify.ALL);
             }
         });
 
@@ -128,8 +125,7 @@ public class Note extends AppCompatActivity {
     }
 
     private void addPositionLink(String link) {
-        // TODO Convert link to hypertext
-        editText.getText().insert(editText.getSelectionStart(), link);
+        editText.getText().insert(editText.getSelectionStart(), link + " ");
         editText.setSelection(editText.getSelectionStart());
     }
 
