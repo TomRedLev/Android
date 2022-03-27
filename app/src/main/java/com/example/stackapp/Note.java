@@ -94,7 +94,7 @@ public class Note extends AppCompatActivity {
         } else if (id == R.id.addAudio) {
             startActivity(new Intent(this, AudioActivity.class));
         } else if (id == R.id.addGPS) {
-            startActivity(new Intent(this, GeolocActivity.class));
+            //startActivity(new Intent(this, GeolocActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

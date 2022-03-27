@@ -62,10 +62,6 @@
             android:name=".AudioActivity"
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
-        <activity
-            android:name=".GeolocActivity"
-            android:exported="true"
-            android:theme="@style/AppDialogTheme" />
     </application>
 
 </manifest>
