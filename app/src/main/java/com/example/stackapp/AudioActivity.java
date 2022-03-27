@@ -83,14 +83,6 @@ public class AudioActivity extends AppCompatActivity {
         play.setOnClickListener( (v) -> {
             Intent intent = new Intent(AudioActivity.this, MediaplayerService.class);
             this.startService(intent);
-            mp = new MediaPlayer();
-            try {
-                mp.setDataSource(getFilePath());
-                mp.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mp.start();
         });
     }
 
