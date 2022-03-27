@@ -1,88 +1,95 @@
 package com.example.stackapp;
 
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.GridView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private float longitude;
-    private float latitude;
+    private GridView gridView;
+    private ArrayList<String> notesName;
+    private ArrayList<Intent> notes;
 
-    private static final String[] LOCATION_PERMS={
-            ACCESS_FINE_LOCATION,
-            ACCESS_COARSE_LOCATION
-    };
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button draw = findViewById(R.id.drawButton);
-        draw.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, DrawActivity.class));
-        });
+        notesName = new ArrayList<>();
+        notes = new ArrayList<>();
+        gridView = findViewById(R.id.gridView);
+        retrieveNotesName();
+        gridView.setAdapter(new GridViewActivities(this, notesName));
 
-        Button write = findViewById(R.id.writeButton);
-        write.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, WriteActivity.class));
-        });
-
-        Button hs = findViewById(R.id.hyperstackButton);
-        hs.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, HyperstackActivity.class));
-        });
-
-        Button im = findViewById(R.id.recordButton);
-        im.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, ImageActivity.class));
-        });
-
-        Button audio = findViewById(R.id.audioButton);
-        audio.setOnClickListener( (v) -> {
-            startActivity(new Intent(this, AudioActivity.class));
-        });
-
-        if (checkSelfPermission(ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(LOCATION_PERMS, 1337);
-        }
-
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                return ;
-            }
-        });
-        if (lm != null) {
-            Location loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (loc != null) {
-                latitude = (float) loc.getLatitude();
-                longitude = (float) loc.getLongitude();
-            }
-        }
-
-        Button geo = findViewById(R.id.geoButton);
-        geo.setOnClickListener( (v) -> {
-            Log.i("Link", "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude);
+        gridView.setOnItemClickListener((parent, v, position, id) -> {
+            Intent i = notes.get(position);
+            i.putExtra("noteName", notesName.get(position));
+            startActivity(i);
         });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences prefs = getSharedPreferences("notesName", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("gridViewNames", TextUtils.join(",", notesName));
+        editor.commit();
+    }
+
+    private void retrieveNotesName() {
+        SharedPreferences preferences = getSharedPreferences("notesName", MODE_PRIVATE);
+        String text = preferences.getString("gridViewNames", "");
+        String[] splitted_text = text.split(",");
+        for (String s : splitted_text) {
+            if (!s.equals("")) {
+                notesName.add(s);
+                notes.add(new Intent(this, Note.class));
+            }
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.addNote) {
+            this.inputDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void inputDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.inputlayout, null);
+        EditText input = promptView.findViewById(R.id.userInput);
+
+        new AlertDialog.Builder(this)
+                .setView(promptView)
+                .setPositiveButton("OK", (dialog, id) -> {
+                    notesName.add(input.getText().toString());
+                    notes.add(new Intent(this, Note.class));
+                    gridView.setAdapter(new GridViewActivities(this, notesName));
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
 }

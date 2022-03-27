@@ -7,11 +7,22 @@
     <string name="enter">Enter</string>
     <string name="image">Image</string>
     <string name="choose">Choose</string>
-    <string name="will_contains_a_choosen_image">Will contains a choosen image</string>
+    <string name="will_contains_a_choosen_image">Will contains a chosen image</string>
     <string name="record">Record</string>
     <string name="play">play</string>
     <string name="stop">Stop</string>
     <string name="audio">Audio</string>
     <string name="geoloc_position">geoloc position</string>
     <string name="geoloc">Geoloc</string>
+    <string name="name">Name</string>
+    <string name="grid_view_item">Grid View Item</string>
+    <string name="add_note">Add note</string>
+    <string name="addDrawing">Draw</string>
+    <string name="images">Images</string>
+    <string name="gps">GPS</string>
+    <string name="eraser">eraser</string>
+    <string name="stroke">stroke</string>
+    <string name="fill">fill</string>
+    <string name="black">black</string>
+    <string name="red">red</string>
 </resources>
