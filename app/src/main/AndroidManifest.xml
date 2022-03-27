@@ -44,10 +44,6 @@
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
         <activity
-            android:name=".WriteActivity"
-            android:exported="true"
-            android:theme="@style/AppDialogTheme" />
-        <activity
             android:name=".ImageActivity"
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
