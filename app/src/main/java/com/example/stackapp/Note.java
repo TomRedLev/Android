@@ -12,9 +12,13 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -62,6 +66,26 @@ public class Note extends AppCompatActivity {
         editText = findViewById(R.id.editText);
         noteName = getIntent().getStringExtra("noteName");
         retrieveEditText();
+
+        editText.setLinksClickable(true);
+        editText.setAutoLinkMask(Linkify.WEB_URLS);
+        editText.setMovementMethod(LinkMovementMethod.getInstance());
+        Linkify.addLinks(editText, Linkify.WEB_URLS);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+            }
+        });
 
         NoteResultLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
