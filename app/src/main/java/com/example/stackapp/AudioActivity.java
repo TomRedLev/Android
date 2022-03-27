@@ -1,6 +1,7 @@
 package com.example.stackapp;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,24 +30,35 @@ public class AudioActivity extends AppCompatActivity {
     MediaRecorder mr;
     MediaPlayer mp;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audio);
-
+    private void checkPermission() {
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
-            if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-
-            } else {
-                String[] perm = {Manifest.permission.RECORD_AUDIO};
-                ActivityCompat.requestPermissions(this, perm, 200);
-            }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    1001);
         } else {
             Toast.makeText(this, "No microphone", Toast.LENGTH_LONG);
             return ;
         }
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_audio);
+        checkPermission();
+
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+        String[] pictureDialogItems = {"Select audio from gallery", "Record audio from microphone"};
+        pictureDialog.setItems(pictureDialogItems,
+                (dialog, which) -> {
+                    switch (which) {
+                        case 0: retrievePhotoFromGallery(); break;
+                        case 1: recordAudio(); break;
+                    }});
+        pictureDialog.show();
+    }
+
+    private void recordAudio() {
         Button record = findViewById(R.id.recordButton);
         record.setOnClickListener( (v) -> {
             Toast.makeText(this, "Start recording", Toast.LENGTH_LONG);
@@ -84,6 +96,10 @@ public class AudioActivity extends AppCompatActivity {
             }
             mp.start();
         });
+    }
+
+    private void retrievePhotoFromGallery() {
+
     }
 
     private String getFilePath() {

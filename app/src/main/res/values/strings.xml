@@ -23,7 +23,6 @@
     <string name="eraser">eraser</string>
     <string name="stroke">stroke</string>
     <string name="fill">fill</string>
-    <string name="fill_amp_stroke"><![CDATA[fill&Stroke]]></string>
     <string name="black">black</string>
     <string name="red">red</string>
 </resources>

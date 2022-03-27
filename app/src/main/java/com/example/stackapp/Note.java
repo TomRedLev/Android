@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -43,13 +44,10 @@ public class Note extends AppCompatActivity {
     private void retrieveEditText() {
         SharedPreferences preferences = getSharedPreferences(noteName, MODE_PRIVATE);
         String text = preferences.getString("note", "");
-        System.out.println("TEXT: " + text);
         String[] splitted_text = text.split("@@@");
         for (String s : splitted_text) {
-            System.out.println("OKOK : " + s);
             boolean match = s.matches("(content:/{2,3}(([a-z]+|[0-9]+)/)+[0-9]+)|(file:/{2,3}(([a-z]+|[0-9]+)/)+[0-9]+\\.[a-z]{3})");
             if (match) {
-                System.out.println("HEUU: " + s);
                 addImage(Uri.parse(s), 500, 500);
             } else {
                 int cursor = editText.getSelectionStart();
@@ -95,6 +93,8 @@ public class Note extends AppCompatActivity {
             startActivity(new Intent(this, DrawActivity.class));
         } else if (id == R.id.addAudio) {
             startActivity(new Intent(this, AudioActivity.class));
+        } else if (id == R.id.addGPS) {
+            startActivity(new Intent(this, GeolocActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -105,7 +105,6 @@ public class Note extends AppCompatActivity {
         d.setBounds(0, 0, sizeX, sizeY);
         int cursor = editText.getSelectionStart();
         String name = "@@@" + image.toString() + "@@@";
-        System.out.println("NAME: " + name);
         editText.getText().insert(cursor, name);
         cursor = editText.getSelectionStart();
         SpannableStringBuilder builder = new SpannableStringBuilder(editText.getText());

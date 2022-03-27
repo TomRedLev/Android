@@ -39,7 +39,6 @@ public class GeolocActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geoloc);
 
-        Button but = (Button) findViewById(R.id.geolocButton);
         TextView text = (TextView) findViewById(R.id.geolocText);
 
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -52,14 +51,11 @@ public class GeolocActivity extends AppCompatActivity {
 
 
         fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            longitude = (float) location.getLongitude();
-                            latitude = (float) location.getLatitude();
-                        }
+                .addOnSuccessListener(this, location -> {
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        longitude = (float) location.getLongitude();
+                        latitude = (float) location.getLatitude();
                     }
                 });
 
@@ -82,11 +78,6 @@ public class GeolocActivity extends AppCompatActivity {
             }
         };
 
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text.setText("Longitude : " + longitude + ", Latitude : " + latitude);
-            }
-        });
+        text.setText("Longitude : " + longitude + ", Latitude : " + latitude);
     }
 }
