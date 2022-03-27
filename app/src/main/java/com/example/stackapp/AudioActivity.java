@@ -87,6 +87,8 @@ public class AudioActivity extends AppCompatActivity {
 
         Button play = findViewById(R.id.playButton);
         play.setOnClickListener( (v) -> {
+            Intent intent = new Intent(AudioActivity.this, MediaplayerService.class);
+            this.startService(intent);
             mp = new MediaPlayer();
             try {
                 mp.setDataSource(getFilePath());
