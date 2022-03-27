@@ -44,9 +44,6 @@
             android:name=".AudioActivity"
             android:exported="true" />
 
-        <activity
-            android:name=".GeolocActivity"
-            android:exported="true" />
     </application>
 
 </manifest>
