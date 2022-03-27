@@ -51,7 +51,9 @@ public class ImageActivity extends AppCompatActivity {
                         case 0: chooseFromGallery(); break;
                         case 1: chooseCamera(); break;
                     }});
-        pictureDialog.show();
+        AlertDialog p = pictureDialog.create();
+        p.setCanceledOnTouchOutside(false);
+        p.show();
     }
 
     private void chooseCamera() {
