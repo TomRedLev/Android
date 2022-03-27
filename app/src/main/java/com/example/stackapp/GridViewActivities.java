@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class GridViewActivities extends BaseAdapter {
+
     private Context mContext;
     private List<String> names;
 
@@ -40,12 +41,10 @@ public class GridViewActivities extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (view == null) {
-
             grid = new View(mContext);
             grid = inflater.inflate(R.layout.gridviewlayout, null);
             TextView textView = (TextView) grid.findViewById(R.id.gridview_text);
             textView.setText(names.get(i));
-            //System.out.println("Test");
         } else {
             grid = view;
         }

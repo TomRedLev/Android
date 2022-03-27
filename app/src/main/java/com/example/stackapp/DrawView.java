@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.view.ContextMenu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -47,4 +48,5 @@ public class DrawView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, paint);
     }
+
 }

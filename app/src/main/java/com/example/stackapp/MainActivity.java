@@ -2,24 +2,20 @@ package com.example.stackapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    // TODO Add saved notes on device to retrieve them when restarting the app
 
     private GridView gridView;
     private ArrayList<String> notesName;
@@ -33,9 +29,36 @@ public class MainActivity extends AppCompatActivity {
         notesName = new ArrayList<>();
         notes = new ArrayList<>();
         gridView = findViewById(R.id.gridView);
+        retrieveNotesName();
         gridView.setAdapter(new GridViewActivities(this, notesName));
 
-        gridView.setOnItemClickListener((parent, v, position, id) -> startActivity(notes.get(position)));
+        gridView.setOnItemClickListener((parent, v, position, id) -> {
+            Intent i = notes.get(position);
+            i.putExtra("noteName", notesName.get(position));
+            startActivity(i);
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences prefs = getSharedPreferences("notesName", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("gridViewNames", TextUtils.join(",", notesName));
+        editor.commit();
+    }
+
+    private void retrieveNotesName() {
+        SharedPreferences preferences = getSharedPreferences("notesName", MODE_PRIVATE);
+        String text = preferences.getString("gridViewNames", "");
+        String[] splitted_text = text.split(",");
+        for (String s : splitted_text) {
+            if (!s.equals("")) {
+                notesName.add(s);
+                notes.add(new Intent(this, Note.class));
+            }
+
+        }
     }
 
     @Override
@@ -48,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.myNote) {
-            this.inputDialog(this);
+            this.inputDialog();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void inputDialog(Context context) {
+    private void inputDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View promptView = layoutInflater.inflate(R.layout.inputlayout, null);
         EditText input = promptView.findViewById(R.id.userInput);
@@ -62,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 .setView(promptView)
                 .setPositiveButton("OK", (dialog, id) -> {
                     notesName.add(input.getText().toString());
-                    notes.add(new Intent(context, Note.class));
-                    gridView.setAdapter(new GridViewActivities(context, notesName));
+                    notes.add(new Intent(this, Note.class));
+                    gridView.setAdapter(new GridViewActivities(this, notesName));
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
