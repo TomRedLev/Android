@@ -72,7 +72,7 @@ public class ImageActivity extends AppCompatActivity {
                 Uri path = addToGallery(imagePath);
                 intent.putExtra("imageUri", path.toString());
             }
-            setResult(RESULT_OK, intent);
+            setResult(10000, intent);
             finish();
         }
     }

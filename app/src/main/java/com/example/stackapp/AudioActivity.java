@@ -7,20 +7,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.MediaController;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +79,7 @@ public class AudioActivity extends AppCompatActivity {
             mr = null;
         });
 
-        Button play = findViewById(R.id.playButton);
+        Button play = findViewById(R.id.gpsButton);
         play.setOnClickListener( (v) -> {
             Intent intent = new Intent(AudioActivity.this, MediaplayerService.class);
             this.startService(intent);

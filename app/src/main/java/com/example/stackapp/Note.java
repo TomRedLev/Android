@@ -2,20 +2,18 @@ package com.example.stackapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +21,6 @@ import android.widget.EditText;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.regex.Pattern;
 
 public class Note extends AppCompatActivity {
 
@@ -69,11 +66,16 @@ public class Note extends AppCompatActivity {
         NoteResultLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
+            if (result.getResultCode() == 10000) {
                 Intent data = result.getData();
                 String image = data.getStringExtra("imageUri");
                 addImage(Uri.parse(image),500, 500);
-            }});
+            } else if (result.getResultCode() == 20000) {
+                Intent data = result.getData();
+                String link = data.getStringExtra("gpsLink");
+                addPositionLink(link);
+            }
+        });
     }
 
     @Override
@@ -94,10 +96,17 @@ public class Note extends AppCompatActivity {
         } else if (id == R.id.addAudio) {
             startActivity(new Intent(this, AudioActivity.class));
         } else if (id == R.id.addGPS) {
-            //startActivity(new Intent(this, GeolocActivity.class));
+            Intent gpsIntent = new Intent(this, GeolocActivity.class);
+            NoteResultLauncher.launch(gpsIntent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addPositionLink(String link) {
+        // TODO Convert link to hypertext
+        editText.getText().insert(editText.getSelectionStart(), link);
+        editText.setSelection(editText.getSelectionStart());
     }
 
     private void addImage(Uri image, int sizeX, int sizeY) {

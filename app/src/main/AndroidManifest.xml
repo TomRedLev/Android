@@ -51,15 +51,15 @@
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
         <activity
-            android:name=".HyperstackActivity"
-            android:exported="true"
-            android:theme="@style/AppDialogTheme" />
-        <activity
             android:name=".ImageActivity"
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".AudioActivity"
+            android:exported="true"
+            android:theme="@style/AppDialogTheme" />
+        <activity
+            android:name=".GeolocActivity"
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
     </application>
