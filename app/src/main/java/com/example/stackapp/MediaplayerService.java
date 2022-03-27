@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 
 public class MediaplayerService extends Service {
@@ -31,7 +32,7 @@ public class MediaplayerService extends Service {
     private String getFilePath() {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File dir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File f = new File(dir, "record.mp3");
+        File f = new File(dir, Calendar.getInstance().getTimeInMillis() + ".mp3");
         return f.getPath();
     }
 

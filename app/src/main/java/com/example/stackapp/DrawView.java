@@ -4,12 +4,12 @@ import static com.example.stackapp.DrawActivity.brush;
 import static com.example.stackapp.DrawActivity.path;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.view.ContextMenu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +25,10 @@ public class DrawView extends View {
     public static List<Integer> colorList = new ArrayList<>();
     public static List<Paint.Style> styleList = new ArrayList<>();
 
+
     public ViewGroup.LayoutParams params;
     public static int brush_color = Color.BLACK;
     public static Paint.Style brushStyle = Paint.Style.STROKE;
-
 
     public DrawView(Context context) {
         super(context);

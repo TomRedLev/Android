@@ -26,4 +26,6 @@
     <string name="black">black</string>
     <string name="red">red</string>
     <string name="get_your_location">Get your location</string>
+    <string name="savenote">saveNote</string>
+    <string name="saveNote">saveNote</string>
 </resources>

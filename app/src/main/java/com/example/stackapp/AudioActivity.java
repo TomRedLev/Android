@@ -5,24 +5,28 @@ import android.app.AlertDialog;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class AudioActivity extends AppCompatActivity {
 
-    MediaRecorder mr;
-    MediaPlayer mp;
+    private MediaRecorder mr;
+    private String audioPath;
 
     private void checkPermission() {
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
@@ -46,20 +50,32 @@ public class AudioActivity extends AppCompatActivity {
         pictureDialog.setItems(pictureDialogItems,
                 (dialog, which) -> {
                     switch (which) {
-                        case 0: retrievePhotoFromGallery(); break;
+                        case 0: retrievePhotoFromGallery(); sendAudioPath(); break;
                         case 1: recordAudio(); break;
                     }});
-        pictureDialog.show();
+        AlertDialog p = pictureDialog.create();
+        p.setCanceledOnTouchOutside(false);
+        p.show();
+    }
+
+    private void sendAudioPath() {
+        Intent intent = new Intent();
+        intent.putExtra("audioPath", audioPath);
+        System.out.println("LOL: " + audioPath);
+        setResult(30000, intent);
+        finish();
     }
 
     private void recordAudio() {
+        System.out.println("WHAT2");
         Button record = findViewById(R.id.recordButton);
         record.setOnClickListener( (v) -> {
             Toast.makeText(this, "Start recording", Toast.LENGTH_LONG);
             mr = new MediaRecorder();
             mr.setAudioSource(MediaRecorder.AudioSource.MIC);
             mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mr.setOutputFile(getFilePath());
+            audioPath = getFilePath();
+            mr.setOutputFile(audioPath);
             mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             try {
                 Log.v("Record", "Here");
@@ -77,23 +93,51 @@ public class AudioActivity extends AppCompatActivity {
             mr.stop();
             mr.release();
             mr = null;
+            sendAudioPath();
         });
+        System.out.println("WHAT3");
 
+        /*
         Button play = findViewById(R.id.gpsButton);
         play.setOnClickListener( (v) -> {
             Intent intent = new Intent(AudioActivity.this, MediaplayerService.class);
             this.startService(intent);
         });
+         */
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK ) {
+            Intent intent = new Intent();
+            if (requestCode == 2000) {
+                intent.putExtra("audioPath", data.getData().toString());
+            }
+            setResult(30000, intent);
+        }
+        System.out.println("WHAT1");
+        finish();
     }
 
     private void retrievePhotoFromGallery() {
+        /*
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("audio/*");
+        startActivityForResult(intent, 2000);
+
+         */
+        Intent videoIntent = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(videoIntent, "Select Audio"), 2000);
 
     }
 
     private String getFilePath() {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File dir = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File f = new File(dir, "record.mp3");
+        File f = new File(dir, Calendar.getInstance().getTimeInMillis() + ".mp3");
         return f.getPath();
     }
 }

@@ -11,10 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
+import android.text.style.StyleSpan;
 import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +66,7 @@ public class Note extends AppCompatActivity {
         noteName = getIntent().getStringExtra("noteName");
         retrieveEditText();
 
+
         editText.setLinksClickable(true);
         editText.setAutoLinkMask(Linkify.ALL);
         editText.setMovementMethod(LinkMovementMethod.getInstance());
@@ -95,6 +98,10 @@ public class Note extends AppCompatActivity {
                 Intent data = result.getData();
                 String link = data.getStringExtra("gpsLink");
                 addPositionLink(link);
+            } else if (result.getResultCode() == 30000) {
+                Intent data = result.getData();
+                String audioPath = data.getStringExtra("audioPath");
+                addAudioLink(audioPath);
             }
         });
     }
@@ -113,15 +120,32 @@ public class Note extends AppCompatActivity {
             Intent imageIntent = new Intent(this, ImageActivity.class);
             NoteResultLauncher.launch(imageIntent);
         } else if (id == R.id.addDrawing) {
-            startActivity(new Intent(this, DrawActivity.class));
+            Intent drawIntent = new Intent(this, DrawActivity.class);
+            NoteResultLauncher.launch(drawIntent);
         } else if (id == R.id.addAudio) {
-            startActivity(new Intent(this, AudioActivity.class));
+            Intent audioIntent = new Intent(this, AudioActivity.class);
+            NoteResultLauncher.launch(audioIntent);
         } else if (id == R.id.addGPS) {
             Intent gpsIntent = new Intent(this, GeolocActivity.class);
             NoteResultLauncher.launch(gpsIntent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addAudioLink(String path) {
+        // TODO
+        /*
+        SpannableString ss = new SpannableString(
+                "text4: Click here to dial the phone.");
+
+        ss.setSpan(new URLSpan("tel:4155551212"), 13, 17,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextView t4 = (TextView) findViewById(R.id.text4);
+        t4.setText(ss);
+
+         */
     }
 
     private void addPositionLink(String link) {
