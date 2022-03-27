@@ -68,12 +68,9 @@
             android:exported="true"
             android:theme="@style/AppDialogTheme" />
 
-        <receiver android:name=".broadcastReceiver"  android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
-            </intent-filter>
-        </receiver>
+        <receiver
+            android:name=".broadcastReceiver"
+            android:exported="true" />
     </application>
 
 </manifest>
