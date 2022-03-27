@@ -2,6 +2,7 @@ package com.example.stackapp;
 
 import static com.example.stackapp.DrawActivity.brush;
 import static com.example.stackapp.DrawActivity.path;
+import static com.example.stackapp.DrawActivity.clickTodoForLine;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -28,6 +29,8 @@ public class DrawView extends View {
     public ViewGroup.LayoutParams params;
     public static int brush_color = Color.BLACK;
     public static Paint.Style brushStyle = Paint.Style.STROKE;
+    private float xLine;
+    private float yLine;
 
 
     public DrawView(Context context) {
@@ -47,6 +50,27 @@ public class DrawView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (clickTodoForLine > 0) {
+            if (clickTodoForLine == 2) {
+                this.xLine = event.getX();
+                this.yLine = event.getY();
+                path.moveTo(xLine, yLine);
+                clickTodoForLine --;
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+
+                }
+            }
+            else {
+                //path.moveTo(xLine, yLine);
+                path.lineTo(event.getX(), event.getY());
+                pathList.add(path);
+                colorList.add(brush_color);
+                styleList.add(brushStyle);
+                clickTodoForLine = 0;
+            }
+        }
         float x = event.getX();
         float y = event.getY();
         switch (event.getAction()) {

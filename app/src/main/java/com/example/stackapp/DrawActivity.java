@@ -22,6 +22,7 @@ public class DrawActivity extends AppCompatActivity {
 
     public static Path path = new Path();
     public static Paint brush = new Paint();
+    public static int clickTodoForLine = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,9 @@ public class DrawActivity extends AppCompatActivity {
 
         Button redColor = findViewById(R.id.redColor);
         redColor.setOnClickListener((v) -> currentColor(Color.RED));
+
+        Button line = findViewById(R.id.line);
+        line.setOnClickListener((v) -> clickTodoForLine = 2);
     }
 
     public void currentColor(int color) {
